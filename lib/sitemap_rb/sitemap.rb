@@ -2,6 +2,7 @@
 
 module SitemapRb
   # # SitemapRb::Sitemap
+  # @see [Sitemaps XML format](https://www.sitemaps.org/protocol.html)
   class Sitemap
     CHANGEFREQS = %w[
       always
@@ -64,6 +65,7 @@ module SitemapRb
 
     # @param [String] loc
     # @return [REXML::Element]
+    # @raise [ArgumentError]
     def create_loc_element(loc)
       raise ArgumentError unless URI.parse(loc).scheme.to_s.start_with?('http')
 
@@ -78,6 +80,7 @@ module SitemapRb
 
     # @param [String] changefreq
     # @return [REXML::Element]
+    # @raise [ArgumentError]
     def create_changefreq_element(changefreq)
       raise ArgumentError unless CHANGEFREQS.include?(changefreq)
 
@@ -86,6 +89,7 @@ module SitemapRb
 
     # @param [Float] priority
     # @return [REXML::Element]
+    # @raise [ArgumentError]
     def create_priority_element(priority)
       raise ArgumentError unless priority.between?(0.0, 1.0)
 
