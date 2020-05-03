@@ -40,12 +40,13 @@ module SitemapRb
 
     # @param [String] loc
     # @param [String] changefreq
-    # @param [String] priority
+    # @param [Float] priority
+    # @param [Time] lastmod
     # @return [REXML::Element]
-    def add(loc, changefreq: 'always', priority: 0.5)
+    def add(loc, changefreq: 'always', priority: 0.5, lastmod: Time.now)
       url = REXML::Element.new('url')
       url.add_element(create_loc_element(loc))
-      url.add_element(lastmod_element)
+      url.add_element(create_lastmod_element(lastmod))
       url.add_element(create_changefreq_element(changefreq))
       url.add_element(create_priority_element(priority))
       @urlset.add_element(url)
@@ -69,10 +70,10 @@ module SitemapRb
       REXML::Element.new('loc').add_text(loc)
     end
 
+    # @param [Time] lastmod
     # @return [REXML::Element]
-    def lastmod_element
-      @lastmod_element ||=
-        REXML::Element.new('lastmod').add_text(Time.now.strftime('%FT%T%:z'))
+    def create_lastmod_element(lastmod)
+      REXML::Element.new('lastmod').add_text(lastmod.strftime('%FT%T%:z'))
     end
 
     # @param [String] changefreq
