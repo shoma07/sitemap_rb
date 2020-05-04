@@ -27,6 +27,21 @@ module SitemapRb
       'xmlns:xhtml' => 'http://www.w3.org/1999/xhtml'
     }.freeze
 
+    SEARCH_ENGINES = %w[
+      http://www.google.com/webmasters/tools/ping?sitemap=
+      http://www.bing.com/ping?sitemap=
+    ].freeze
+
+    class << self
+      # @param [String] sitemap_url
+      # @return [void]
+      def ping_search_engines(sitemap_url)
+        SEARCH_ENGINES.each do |url|
+          OpenURI.open_uri(url + CGI.escape(sitemap_url), { read_timeout: 10 })
+        end
+      end
+    end
+
     # @return [SitemapRb::Sitemap]
     def initialize
       @doc = REXML::Document.new(

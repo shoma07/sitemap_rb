@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
-require 'stringio'
+require 'cgi'
+require 'open-uri'
 require 'rexml/document'
+require 'stringio'
 require 'sitemap_rb/version'
 require 'sitemap_rb/sitemap'
 
