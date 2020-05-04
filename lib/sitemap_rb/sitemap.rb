@@ -28,7 +28,7 @@ module SitemapRb
     }.freeze
 
     SEARCH_ENGINES = %w[
-      http://www.google.com/webmasters/tools/ping?sitemap=
+      http://www.google.com/ping?sitemap=
       http://www.bing.com/ping?sitemap=
     ].freeze
 
