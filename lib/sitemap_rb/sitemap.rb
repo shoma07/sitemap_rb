@@ -37,6 +37,7 @@ module SitemapRb
       @urlset = REXML::Element.new('urlset')
       @urlset.add_attributes(URLSET_ATTRIBUTES)
       @doc.add_element(@urlset)
+      @lastmod = Time.now
     end
 
     # @param [String] loc
@@ -44,10 +45,10 @@ module SitemapRb
     # @param [Float] priority
     # @param [Time] lastmod
     # @return [REXML::Element]
-    def add(loc, changefreq: 'always', priority: 0.5, lastmod: Time.now)
+    def add(loc, changefreq: 'always', priority: 0.5, lastmod: nil)
       url = REXML::Element.new('url')
       url.add_element(create_loc_element(loc))
-      url.add_element(create_lastmod_element(lastmod))
+      url.add_element(create_lastmod_element(lastmod || @lastmod))
       url.add_element(create_changefreq_element(changefreq))
       url.add_element(create_priority_element(priority))
       @urlset.add_element(url)
